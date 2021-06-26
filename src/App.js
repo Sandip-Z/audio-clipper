@@ -9,6 +9,7 @@ function App() {
       to: undefined,
     },
   ]);
+  const [audioSource, setAudioSource] = useState(null);
 
   const renderTimeSlots = (timeSlots || []).map((each) => (
     <div className="timeslots__wrapper">
@@ -47,16 +48,17 @@ function App() {
   };
 
   const deleteTimeSlot = (id) => {
-    console.log(id);
     const newTimeSlot = timeSlots.filter((each) => each.id !== id);
     setTimeSlots(newTimeSlot);
   };
 
+  const handleFileUpload = (e) => {
+    const source = URL.createObjectURL(e.target.files[0]);
+    setAudioSource(source);
+  };
+
   return (
     <main>
-      <aside>
-        <audio src={""} />
-      </aside>
       <section>
         <div className="time-slot-controller">
           <p className="time-slot-controller__title">Crop audio files</p>
@@ -69,6 +71,15 @@ function App() {
         </div>
         <div>{renderTimeSlots}</div>
       </section>
+      <aside>
+        {audioSource ? (
+          <audio controls className="audioInput">
+            <source src={audioSource} />
+          </audio>
+        ) : (
+          <input type="file" onChange={handleFileUpload} accept="audio/*" />
+        )}
+      </aside>
     </main>
   );
 }

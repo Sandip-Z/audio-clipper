@@ -2,18 +2,22 @@ main {
   width: 100vw;
   height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 }
 
 aside {
-  /* background-color: red; */
-  min-width: 25vw;
+  min-width: 100vw;
+  margin-top: auto;
 }
 
 section {
   /* background-color: aqua; */
-  min-width: 25vw;
+  min-width: 75vw;
+}
+
+.audioInput {
+  width: 100%;
 }
 
 .time-slot-controller {
@@ -57,7 +61,7 @@ section {
     justify-content: flex-start;
   }
   aside {
-    min-width: 75vw;
+    min-width: 100vw;
   }
 
   section {
