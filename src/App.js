@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import DefaultPlayer from "./Components/Player/default";
 
 function App() {
   const [timeSlots, setTimeSlots] = useState([
@@ -57,6 +58,10 @@ function App() {
     setAudioSource(source);
   };
 
+  const removeSource = () => {
+    setAudioSource(null);
+  };
+
   return (
     <main>
       <section>
@@ -72,13 +77,12 @@ function App() {
         <div>{renderTimeSlots}</div>
       </section>
       <aside>
-        {audioSource ? (
-          <audio controls className="audioInput">
-            <source src={audioSource} />
-          </audio>
-        ) : (
-          <input type="file" onChange={handleFileUpload} accept="audio/*" />
-        )}
+        <DefaultPlayer
+          src={audioSource}
+          handleFileUpload={handleFileUpload}
+          className="audioInput"
+          removeSource={removeSource}
+        />
       </aside>
     </main>
   );
