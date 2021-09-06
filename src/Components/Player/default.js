@@ -1,13 +1,18 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 
 const RemoveSource = ({ removeSource }) => {
   return <button onClick={removeSource}>Remove</button>;
 };
 
 const DefaultPlayer = React.memo(
-  ({ className, src, handleFileUpload, removeSource, selectedTimeSlot }) => {
-    const audioRef = useRef(null);
-
+  ({
+    className,
+    src,
+    handleFileUpload,
+    removeSource,
+    selectedTimeSlot,
+    audioRef,
+  }) => {
     const handleOnPlay = () => {
       if (
         Math.trunc(audioRef?.current?.currentTime) === selectedTimeSlot.endTime
