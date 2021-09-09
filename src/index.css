@@ -27,6 +27,7 @@ code {
   background-color: #dfe6e9;
   padding: 10px;
   margin-bottom: 25px;
+  margin-top: 25px;
   align-items: center;
   justify-content: space-between;
   border-radius: 5px;
@@ -70,6 +71,17 @@ code {
 .timeSlots__wrapper--buttonWrapper {
   display: flex;
   align-items: center;
+}
+
+.audioInput--Wrapper {
+  display: flex;
+}
+
+.audioInput--removeButton {
+  border: 0px;
+  background-color: #2d3436;
+  color: #d63031;
+  cursor: pointer;
 }
 
 /* Chrome, Safari, Edge, Opera */
