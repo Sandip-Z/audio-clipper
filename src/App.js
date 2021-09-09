@@ -77,32 +77,50 @@ function App() {
     return (timeSlots || []).map((each) => {
       return (
         <div className="timeSlots__wrapper" key={`timeSlots${each.id}`}>
-          <input
-            type="checkbox"
-            checked={each.id === selectedTimeSlot?.id ? true : false}
-            onChange={() => handleSelectedTimeSlotChanged(each.id)}
-          />
-          From:{each.id}
-          <InputTime
-            key={`from-${each.id}`}
-            type="startTime"
-            time={each.startTime}
-            handleTimeChange={handleSelectedTimeSlotTimeChanged}
-            id={each.id}
-          />
-          To:{" "}
-          <InputTime
-            key={`to-${each.id}`}
-            type="endTime"
-            time={each.endTime}
-            id={each.id}
-            handleTimeChange={handleSelectedTimeSlotTimeChanged}
-          />
-          <button onClick={() => deleteTimeSlot(each.id)}>delete</button>
-          <button>download</button>
-          <button onClick={() => handlePlaySelectedTimeSlot(each.id)}>
-            Play
-          </button>
+          <div className="timeSlots__wrapper--checkboxWrapper">
+            <input
+              type="checkbox"
+              checked={each.id === selectedTimeSlot?.id ? true : false}
+              onChange={() => handleSelectedTimeSlotChanged(each.id)}
+              title={
+                each.id === selectedTimeSlot?.id
+                  ? "Selected Time Slot"
+                  : "Select this time slot to play"
+              }
+            />
+          </div>
+          <div className="timeSlots__wrapper--inputAndButtonWrapper">
+            <div className="timeSlots__wrapper--inputWrapper">
+              From:
+              <InputTime
+                key={`from-${each.id}`}
+                type="startTime"
+                time={each.startTime}
+                handleTimeChange={handleSelectedTimeSlotTimeChanged}
+                id={each.id}
+              />
+              To:{" "}
+              <InputTime
+                key={`to-${each.id}`}
+                type="endTime"
+                time={each.endTime}
+                id={each.id}
+                handleTimeChange={handleSelectedTimeSlotTimeChanged}
+              />
+            </div>
+            <div className="timeSlots__wrapper--buttonWrapper">
+              <button
+                onClick={() => deleteTimeSlot(each.id)}
+                title="Delete this time slot"
+              >
+                delete
+              </button>
+              <button disabled={true}>download</button>
+              <button onClick={() => handlePlaySelectedTimeSlot(each.id)}>
+                Play
+              </button>
+            </div>
+          </div>
         </div>
       );
     });
