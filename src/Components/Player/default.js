@@ -18,13 +18,13 @@ const DefaultPlayer = React.memo(
         Math.trunc(audioRef?.current?.currentTime) === selectedTimeSlot.endTime
       ) {
         audioRef.current.pause();
-        audioRef.current.currentTime = selectedTimeSlot.startTime;
+        audioRef.current.currentTime = selectedTimeSlot?.startTime || 0;
       }
     };
 
     useEffect(() => {
       if (audioRef.current) {
-        audioRef.current.currentTime = selectedTimeSlot.startTime;
+        audioRef.current.currentTime = selectedTimeSlot?.startTime || 0;
       }
     });
 
