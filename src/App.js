@@ -1,41 +1,39 @@
-import { useState, useRef, useEffect } from "react";
-import "./App.css";
+import { useState, useRef, useEffect, useCallback } from "react";
 import InputTime from "./Components/InputTime";
 import DefaultPlayer from "./Components/Player/default";
+import { TimeSlotService } from "./Services/TimeSlotService";
+import "./App.css";
 
 function App() {
   const audioRef = useRef(null);
-  const [timeSlots, setTimeSlots] = useState([
-    {
-      id: "1",
+  const [sourceDuration, setSourceDuration] = useState(0);
+  const [timeSlots, setTimeSlots] = useState(undefined);
+  const [audioSource, setAudioSource] = useState(null);
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState(undefined);
+
+  const { GenerateIdForTimeSlot } = TimeSlotService;
+
+  useEffect(() => {
+    var defaultTimeSlot = {
+      id: GenerateIdForTimeSlot(),
       startTime: 0,
       endTime: 0,
       selected: true,
-    },
-  ]);
-  const [audioSource, setAudioSource] = useState(null);
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState({
-    startTime: 0,
-    endTime: 0,
-    id: "1",
-    selected: true,
-  });
-
-  useEffect(() => {
+    };
     if (audioSource) {
-      audioRef?.current?.addEventListener("loadedmetadata", () => {
-        const duration = Math.trunc(audioRef?.current?.duration);
-        setSelectedTimeSlot({
-          ...selectedTimeSlot,
-          endTime: duration,
-        });
-        const newTimeSlot = [...timeSlots];
-        newTimeSlot[0].endTime = duration;
-        setTimeSlots(newTimeSlot);
-        console.log("hh");
-      });
+      var loadedMetaDataEvent = audioRef?.current?.addEventListener(
+        "loadedmetadata",
+        () => {
+          const duration = Math.trunc(audioRef?.current?.duration);
+          defaultTimeSlot.endTime = duration;
+          setSelectedTimeSlot(defaultTimeSlot);
+          setTimeSlots([defaultTimeSlot]);
+          setSourceDuration(duration);
+        }
+      );
     }
-    // return () => settingDurationAtFirst.removeEventListener()
+    return () =>
+      loadedMetaDataEvent?.removeEventListener("loadedmetadata", () => {});
   }, [audioSource]);
 
   //This function runs when time, either startTime or endTime of a selected time slot is changed.
@@ -44,58 +42,84 @@ function App() {
       ...selectedTimeSlot,
       [type]: time,
     };
-    const timeSlotIndex = timeSlots.findIndex((each) => each.id === id);
+    const timeSlotIndex = timeSlots?.findIndex((each) => each.id === id);
     const newTimeSlot = [...timeSlots];
-    newTimeSlot[timeSlotIndex] = newTime;
-    if (id === selectedTimeSlot.id) {
+    newTimeSlot[timeSlotIndex] = {
+      ...newTimeSlot[timeSlotIndex],
+      [type]: time,
+    };
+    if (id === selectedTimeSlot?.id) {
       setSelectedTimeSlot(newTime);
     }
     setTimeSlots(newTimeSlot);
+    console.log(newTimeSlot, newTime);
   };
 
   const handleSelectedTimeSlotChanged = (id) => {
     const matchedIndex = timeSlots.findIndex((each) => each.id === id);
-    setSelectedTimeSlot(timeSlots[matchedIndex]);
+    const newSelectedTimeSlot = { ...timeSlots[matchedIndex], selected: true };
+    const updatedTimeSlot = timeSlots.map((slot) => {
+      if (slot.id === id) {
+        return {
+          ...slot,
+          selected: true,
+        };
+      }
+      return {
+        ...slot,
+        selected: false,
+      };
+    });
+    console.log(updatedTimeSlot);
+    setSelectedTimeSlot(newSelectedTimeSlot);
+    setTimeSlots(updatedTimeSlot);
   };
 
-  const renderTimeSlots = (timeSlots || []).map((each) => (
-    <div className="timeSlots__wrapper" key={`timeSlots${each.id}`}>
-      <input
-        type="checkbox"
-        checked={each.id === selectedTimeSlot.id ? true : false}
-        onChange={() => handleSelectedTimeSlotChanged(each.id)}
-      />
-      From:{" "}
-      <InputTime
-        key={`from-${each.id}`}
-        type="startTime"
-        time={each.startTime}
-        handleTimeChange={handleSelectedTimeSlotTimeChanged}
-        id={each.id}
-      />
-      To:{" "}
-      <InputTime
-        key={`to-${each.id}`}
-        type="endTime"
-        time={each.endTime}
-        id={each.id}
-        handleTimeChange={handleSelectedTimeSlotTimeChanged}
-      />
-      <button onClick={() => deleteTimeSlot(each.id)}>delete</button>
-      <button>download</button>
-      <button onClick={() => handlePlaySelectedTimeSlot(each.id)}>Play</button>
-    </div>
-  ));
+  const renderTimeSlots = useCallback(() => {
+    return (timeSlots || []).map((each) => {
+      return (
+        <div className="timeSlots__wrapper" key={`timeSlots${each.id}`}>
+          <input
+            type="checkbox"
+            checked={each.id === selectedTimeSlot?.id ? true : false}
+            onChange={() => handleSelectedTimeSlotChanged(each.id)}
+          />
+          From:{each.id}
+          <InputTime
+            key={`from-${each.id}`}
+            type="startTime"
+            time={each.startTime}
+            handleTimeChange={handleSelectedTimeSlotTimeChanged}
+            id={each.id}
+          />
+          To:{" "}
+          <InputTime
+            key={`to-${each.id}`}
+            type="endTime"
+            time={each.endTime}
+            id={each.id}
+            handleTimeChange={handleSelectedTimeSlotTimeChanged}
+          />
+          <button onClick={() => deleteTimeSlot(each.id)}>delete</button>
+          <button>download</button>
+          <button onClick={() => handlePlaySelectedTimeSlot(each.id)}>
+            Play
+          </button>
+        </div>
+      );
+    });
+  }, [timeSlots]);
 
   //This function adds new time slot
   const handleAddTimeSlot = () => {
-    const newId = timeSlots.length + 1;
+    const newId = GenerateIdForTimeSlot();
     const newTimeSlot = [
       ...timeSlots,
       {
         id: newId,
         startTime: 0,
-        endTime: 0,
+        endTime: sourceDuration,
+        selected: false,
       },
     ];
     setTimeSlots(newTimeSlot);
@@ -132,7 +156,7 @@ function App() {
             Add time slot
           </button>
         </div>
-        <div>{renderTimeSlots}</div>
+        <div>{renderTimeSlots()}</div>
       </section>
       <aside>
         <DefaultPlayer
