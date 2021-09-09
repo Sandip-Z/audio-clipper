@@ -52,7 +52,6 @@ function App() {
       setSelectedTimeSlot(newTime);
     }
     setTimeSlots(newTimeSlot);
-    console.log(newTimeSlot, newTime);
   };
 
   const handleSelectedTimeSlotChanged = (id) => {
@@ -70,7 +69,6 @@ function App() {
         selected: false,
       };
     });
-    console.log(updatedTimeSlot);
     setSelectedTimeSlot(newSelectedTimeSlot);
     setTimeSlots(updatedTimeSlot);
   };
