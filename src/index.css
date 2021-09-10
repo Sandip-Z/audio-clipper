@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   padding: 0;
@@ -16,4 +20,94 @@ html {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.timeSlots__wrapper {
+  display: flex;
+  background-color: #dfe6e9;
+  padding: 10px;
+  margin-bottom: 25px;
+  margin-top: 25px;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px #b2bec3;
+}
+
+.timeSlot {
+  display: flex;
+}
+
+.timeSlot p {
+  font-size: 12px;
+}
+
+.timeSlot--input {
+  width: 32px;
+  border: 1px solid #b2bec3;
+  background-color: #dfe6e9;
+  margin: 10px;
+}
+
+.timeSlots__wrapper--inputWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.timeslot {
+  margin-right: 25px;
+}
+
+.timeSlots__wrapper--inputAndButtonWrapper {
+  display: flex;
+  flex-grow: 1 !important;
+  justify-content: space-between;
+  margin-left: 15px;
+}
+
+.timeSlots__wrapper--checkboxWrapper {
+}
+
+.timeSlots__wrapper--buttonWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.audioInput--Wrapper {
+  display: flex;
+}
+
+.audioInput--removeButton {
+  border: 0px;
+  background-color: #2d3436;
+  color: #d63031;
+  cursor: pointer;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.clip-button {
+  margin: 0 8px;
+  border: 0px;
+  border-radius: 2px;
+  transition: all 0.5s;
+  padding: 7px;
+}
+
+.clip-button:hover {
+  /* background-color: #b2bec3;*/
+  background-color: white;
+  transition: all 0.2s;
+  box-shadow: 1px 2px 10px #b2bec3;
+  cursor: pointer;
 }

@@ -9,10 +9,11 @@ const InputTime = ({id, time, handleTimeChange, type}) => {
         GetChangedTimeToUpdateTimeFromInputs,
     } = TimeSlotService
 
-    return <>
+    return <div className="timeSlot">
         <input 
             type="number" 
-            id="customTimeComponent-Hour" 
+            id="customTimeComponent-Hour"
+            className="timeSlot--input" 
             value={GetHoursFromSeconds(time)} 
             onChange={(event)=>handleTimeChange(
                 id, 
@@ -26,9 +27,11 @@ const InputTime = ({id, time, handleTimeChange, type}) => {
                     ))}
             min={0}
         />
+        <p>:</p>
         <input 
             type="number" 
             id="customTimeComponent-Minute" 
+            className="timeSlot--input"
             value={GetMinutesFromSeconds(time)} 
             onChange={(event) =>handleTimeChange(
                 id, 
@@ -43,9 +46,11 @@ const InputTime = ({id, time, handleTimeChange, type}) => {
             max={59}
             min={0}
         />
+        <p>:</p>
         <input 
             type="number" 
             id="customTimeComponent-Second" 
+            className="timeSlot--input"
             value={GetLeftOverSecondsFromSeconds(time)} 
             onChange={(event)=>handleTimeChange(
                 id, 
@@ -60,7 +65,7 @@ const InputTime = ({id, time, handleTimeChange, type}) => {
             max={59} 
             min={0}
         />
-    </>
+    </div>
 }
 
 export default InputTime

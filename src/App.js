@@ -2,6 +2,12 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import InputTime from "./Components/InputTime";
 import DefaultPlayer from "./Components/Player/default";
 import { TimeSlotService } from "./Services/TimeSlotService";
+import {
+  TiDelete,
+  TiDownload,
+  TiMediaPlay,
+  TiMediaPause,
+} from "react-icons/ti";
 import "./App.css";
 
 function App() {
@@ -52,7 +58,6 @@ function App() {
       setSelectedTimeSlot(newTime);
     }
     setTimeSlots(newTimeSlot);
-    console.log(newTimeSlot, newTime);
   };
 
   const handleSelectedTimeSlotChanged = (id) => {
@@ -70,7 +75,6 @@ function App() {
         selected: false,
       };
     });
-    console.log(updatedTimeSlot);
     setSelectedTimeSlot(newSelectedTimeSlot);
     setTimeSlots(updatedTimeSlot);
   };
@@ -79,32 +83,56 @@ function App() {
     return (timeSlots || []).map((each) => {
       return (
         <div className="timeSlots__wrapper" key={`timeSlots${each.id}`}>
-          <input
-            type="checkbox"
-            checked={each.id === selectedTimeSlot?.id ? true : false}
-            onChange={() => handleSelectedTimeSlotChanged(each.id)}
-          />
-          From:{each.id}
-          <InputTime
-            key={`from-${each.id}`}
-            type="startTime"
-            time={each.startTime}
-            handleTimeChange={handleSelectedTimeSlotTimeChanged}
-            id={each.id}
-          />
-          To:{" "}
-          <InputTime
-            key={`to-${each.id}`}
-            type="endTime"
-            time={each.endTime}
-            id={each.id}
-            handleTimeChange={handleSelectedTimeSlotTimeChanged}
-          />
-          <button onClick={() => deleteTimeSlot(each.id)}>delete</button>
-          <button>download</button>
-          <button onClick={() => handlePlaySelectedTimeSlot(each.id)}>
-            Play
-          </button>
+          <div className="timeSlots__wrapper--checkboxWrapper">
+            <input
+              type="checkbox"
+              checked={each.id === selectedTimeSlot?.id ? true : false}
+              onChange={() => handleSelectedTimeSlotChanged(each.id)}
+              title={
+                each.id === selectedTimeSlot?.id
+                  ? "Selected Time Slot"
+                  : "Select this time slot to play"
+              }
+            />
+          </div>
+          <div className="timeSlots__wrapper--inputAndButtonWrapper">
+            <div className="timeSlots__wrapper--inputWrapper">
+              From:
+              <InputTime
+                key={`from-${each.id}`}
+                type="startTime"
+                time={each.startTime}
+                handleTimeChange={handleSelectedTimeSlotTimeChanged}
+                id={each.id}
+              />
+              To:{" "}
+              <InputTime
+                key={`to-${each.id}`}
+                type="endTime"
+                time={each.endTime}
+                id={each.id}
+                handleTimeChange={handleSelectedTimeSlotTimeChanged}
+              />
+            </div>
+            <div className="timeSlots__wrapper--buttonWrapper">
+              <button
+                onClick={() => deleteTimeSlot(each.id)}
+                title="Delete this time slot"
+                className="clip-button"
+              >
+                <TiDelete size={22} color={"#d63031"} />
+              </button>
+              <button disabled={true} className="clip-button">
+                <TiDownload size={22} color={"#0984e3"} />
+              </button>
+              <button
+                onClick={() => handlePlaySelectedTimeSlot(each.id)}
+                className="clip-button"
+              >
+                <TiMediaPlay size={22} color={"#00b894"} />
+              </button>
+            </div>
+          </div>
         </div>
       );
     });

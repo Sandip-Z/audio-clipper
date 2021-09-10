@@ -1,7 +1,15 @@
 import React, { useEffect } from "react";
 
-const RemoveSource = ({ removeSource }) => {
-  return <button onClick={removeSource}>Remove</button>;
+const RemoveSource = ({ removeSource, className }) => {
+  return (
+    <button
+      onClick={removeSource}
+      className={`${className}--removeButton`}
+      title="Remove current source"
+    >
+      Remove
+    </button>
+  );
 };
 
 const DefaultPlayer = React.memo(
@@ -30,7 +38,7 @@ const DefaultPlayer = React.memo(
 
     if (src) {
       return (
-        <>
+        <div className={`${className}--Wrapper`}>
           <audio
             controls
             className={className}
@@ -39,8 +47,8 @@ const DefaultPlayer = React.memo(
           >
             <source src={src} />
           </audio>
-          <RemoveSource removeSource={removeSource} />
-        </>
+          <RemoveSource removeSource={removeSource} className={className} />
+        </div>
       );
     }
     return <input type="file" onChange={handleFileUpload} accept="audio/*" />;
