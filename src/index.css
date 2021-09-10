@@ -95,3 +95,19 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+.clip-button {
+  margin: 0 8px;
+  border: 0px;
+  border-radius: 2px;
+  transition: all 0.5s;
+  padding: 7px;
+}
+
+.clip-button:hover {
+  /* background-color: #b2bec3;*/
+  background-color: white;
+  transition: all 0.2s;
+  box-shadow: 1px 2px 10px #b2bec3;
+  cursor: pointer;
+}

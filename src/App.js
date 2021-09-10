@@ -2,6 +2,12 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import InputTime from "./Components/InputTime";
 import DefaultPlayer from "./Components/Player/default";
 import { TimeSlotService } from "./Services/TimeSlotService";
+import {
+  TiDelete,
+  TiDownload,
+  TiMediaPlay,
+  TiMediaPause,
+} from "react-icons/ti";
 import "./App.css";
 
 function App() {
@@ -112,12 +118,18 @@ function App() {
               <button
                 onClick={() => deleteTimeSlot(each.id)}
                 title="Delete this time slot"
+                className="clip-button"
               >
-                delete
+                <TiDelete size={22} color={"#d63031"} />
               </button>
-              <button disabled={true}>download</button>
-              <button onClick={() => handlePlaySelectedTimeSlot(each.id)}>
-                Play
+              <button disabled={true} className="clip-button">
+                <TiDownload size={22} color={"#0984e3"} />
+              </button>
+              <button
+                onClick={() => handlePlaySelectedTimeSlot(each.id)}
+                className="clip-button"
+              >
+                <TiMediaPlay size={22} color={"#00b894"} />
               </button>
             </div>
           </div>
