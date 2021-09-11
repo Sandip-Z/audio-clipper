@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const RemoveSource = ({ removeSource, className }) => {
+const RemoveSource = ({ className, removeSource }) => {
   return (
     <button
       onClick={removeSource}
@@ -16,10 +16,10 @@ const DefaultPlayer = React.memo(
   ({
     className,
     src,
+    audioRef,
     handleFileUpload,
     removeSource,
     selectedTimeSlot,
-    audioRef,
   }) => {
     const handleOnPlay = () => {
       if (
@@ -47,7 +47,7 @@ const DefaultPlayer = React.memo(
           >
             <source src={src} />
           </audio>
-          <RemoveSource removeSource={removeSource} className={className} />
+          <RemoveSource className={className} removeSource={removeSource} />
         </div>
       );
     }
