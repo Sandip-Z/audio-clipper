@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import InputTime from "./Components/InputTime";
-import DefaultPlayer from "./Components/Player/default";
-import { TimeSlotService } from "./Services/TimeSlotService";
+import InputTime from "Components/InputTime";
+import DefaultPlayer from "Components/Player/default";
+import { TimeSlotService } from "Services/TimeSlotService";
 import {
   TiDelete,
   TiDownload,
