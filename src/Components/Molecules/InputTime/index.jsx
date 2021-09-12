@@ -1,4 +1,4 @@
-import {TimeSlotService} from '../../Services/TimeSlotService'
+import {TimeSlotService} from 'Services/TimeSlotService'
 
 const InputTime = ({id, time, handleTimeChange, type}) => {
 
