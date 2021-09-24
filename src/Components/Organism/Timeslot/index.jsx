@@ -13,7 +13,9 @@ const TimeSlot = ({
     handleSelectedTimeSlotChanged, 
     selectedTimeSlot, 
     handleSelectedTimeSlotTimeChanged, 
-    deleteTimeSlot
+    deleteTimeSlot,
+    audioRef,
+    duration
   }) => {
     return (
             <div className="timeSlots__wrapper" key={`timeSlots${timeslot.id}`}>
@@ -38,6 +40,7 @@ const TimeSlot = ({
                     time={timeslot.startTime}
                     handleTimeChange={handleSelectedTimeSlotTimeChanged}
                     id={timeslot.id}
+                    duration={duration}
                   />
                   To:{" "}
                   <InputTime
@@ -60,7 +63,10 @@ const TimeSlot = ({
                     <TiDownload size={22} color={"#0984e3"} />
                   </button>
                   <button
-                    onClick={() => handlePlaySelectedTimeSlot(timeslot.id)}
+                    onClick={() => {
+                      handlePlaySelectedTimeSlot(timeslot.id);
+                      audioRef?.current?.play();
+                    }}
                     className="clip-button"
                   >
                     <TiMediaPlay size={22} color={"#00b894"} />
