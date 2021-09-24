@@ -95,12 +95,13 @@ const useTimeslot = () => {
 
   const handleFileUpload = (e) => {
     const source = URL.createObjectURL(e.target.files[0]);
-    console.log(source);
     setAudioSource(source);
   };
 
   const removeSource = () => {
     setAudioSource(null);
+    setTimeSlots(undefined);
+    setSelectedTimeSlot(undefined);
   };
 
   return {

@@ -27,6 +27,7 @@ function App() {
       deleteTimeSlot={deleteTimeSlot}
       key={each.id}
       selectedTimeSlot={selectedTimeSlot}
+      audioRef={audioRef}
     />
   ));
 

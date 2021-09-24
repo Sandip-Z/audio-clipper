@@ -13,7 +13,8 @@ const TimeSlot = ({
     handleSelectedTimeSlotChanged, 
     selectedTimeSlot, 
     handleSelectedTimeSlotTimeChanged, 
-    deleteTimeSlot
+    deleteTimeSlot,
+    audioRef
   }) => {
     return (
             <div className="timeSlots__wrapper" key={`timeSlots${timeslot.id}`}>
@@ -60,7 +61,10 @@ const TimeSlot = ({
                     <TiDownload size={22} color={"#0984e3"} />
                   </button>
                   <button
-                    onClick={() => handlePlaySelectedTimeSlot(timeslot.id)}
+                    onClick={() => {
+                      handlePlaySelectedTimeSlot(timeslot.id);
+                      audioRef?.current?.play();
+                    }}
                     className="clip-button"
                   >
                     <TiMediaPlay size={22} color={"#00b894"} />
