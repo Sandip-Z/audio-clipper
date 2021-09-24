@@ -16,6 +16,7 @@ function App() {
     handleSelectedTimeSlotTimeChanged,
     deleteTimeSlot,
     removeSource,
+    sourceDuration,
   } = useTimeslot();
 
   const renderTimeSlots = (timeSlots || []).map((each) => (
@@ -28,6 +29,7 @@ function App() {
       key={each.id}
       selectedTimeSlot={selectedTimeSlot}
       audioRef={audioRef}
+      duration={sourceDuration}
     />
   ));
 

@@ -1,6 +1,6 @@
 import {TimeSlotService} from 'Services/TimeSlotService'
 
-const InputTime = ({id, time, handleTimeChange, type}) => {
+const InputTime = ({id, time, handleTimeChange, type, duration}) => {
 
     const { 
         GetHoursFromSeconds, 
@@ -26,6 +26,7 @@ const InputTime = ({id, time, handleTimeChange, type}) => {
                     }
                     ))}
             min={0}
+            max={duration ? GetHoursFromSeconds(duration) : undefined}
         />
         <p>:</p>
         <input 
@@ -43,7 +44,7 @@ const InputTime = ({id, time, handleTimeChange, type}) => {
                         seconds: time
                     }
                     ))}
-            max={59}
+            max={duration ? GetMinutesFromSeconds(duration) : undefined}
             min={0}
         />
         <p>:</p>
@@ -62,7 +63,7 @@ const InputTime = ({id, time, handleTimeChange, type}) => {
                         seconds: time
                     }
                     ))} 
-            max={59} 
+            max={duration ? GetLeftOverSecondsFromSeconds(duration) : undefined} 
             min={0}
         />
     </div>

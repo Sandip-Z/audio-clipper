@@ -14,7 +14,8 @@ const TimeSlot = ({
     selectedTimeSlot, 
     handleSelectedTimeSlotTimeChanged, 
     deleteTimeSlot,
-    audioRef
+    audioRef,
+    duration
   }) => {
     return (
             <div className="timeSlots__wrapper" key={`timeSlots${timeslot.id}`}>
@@ -39,6 +40,7 @@ const TimeSlot = ({
                     time={timeslot.startTime}
                     handleTimeChange={handleSelectedTimeSlotTimeChanged}
                     id={timeslot.id}
+                    duration={duration}
                   />
                   To:{" "}
                   <InputTime
