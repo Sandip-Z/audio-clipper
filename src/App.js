@@ -26,6 +26,7 @@ function App() {
       handleSelectedTimeSlotTimeChanged={handleSelectedTimeSlotTimeChanged}
       deleteTimeSlot={deleteTimeSlot}
       key={each.id}
+      selectedTimeSlot={selectedTimeSlot}
     />
   ));
 
