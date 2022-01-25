@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
+import { Context } from "../../../Context/TimeSlotContext";
 
 const RemoveSource = ({ className, removeSource }) => {
   return (
@@ -12,47 +13,46 @@ const RemoveSource = ({ className, removeSource }) => {
   );
 };
 
-const DefaultPlayer = React.memo(
-  ({
-    className,
-    src,
+const DefaultPlayer = React.memo(({ className }) => {
+  const context = useContext(Context);
+  const {
     audioRef,
-    handleFileUpload,
+    audioSource,
     removeSource,
     selectedTimeSlot,
-  }) => {
-    const handleOnPlay = () => {
-      if (
-        Math.trunc(audioRef?.current?.currentTime) === selectedTimeSlot.endTime
-      ) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = selectedTimeSlot?.startTime || 0;
-      }
-    };
-
-    useEffect(() => {
-      if (audioRef.current) {
-        audioRef.current.currentTime = selectedTimeSlot?.startTime || 0;
-      }
-    });
-
-    if (src) {
-      return (
-        <div className={`${className}--Wrapper`}>
-          <audio
-            controls
-            className={className}
-            ref={audioRef}
-            onTimeUpdate={handleOnPlay}
-          >
-            <source src={src} />
-          </audio>
-          <RemoveSource className={className} removeSource={removeSource} />
-        </div>
-      );
+    handleFileUpload,
+  } = context;
+  const handleOnPlay = () => {
+    if (
+      Math.trunc(audioRef?.current?.currentTime) === selectedTimeSlot.endTime
+    ) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = selectedTimeSlot?.startTime || 0;
     }
-    return <input type="file" onChange={handleFileUpload} accept="audio/*" />;
+  };
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = selectedTimeSlot?.startTime || 0;
+    }
+  });
+
+  if (audioSource) {
+    return (
+      <div className={`${className}--Wrapper`}>
+        <audio
+          controls
+          className={className}
+          ref={audioRef}
+          onTimeUpdate={handleOnPlay}
+        >
+          <source src={audioSource} />
+        </audio>
+        <RemoveSource className={className} removeSource={removeSource} />
+      </div>
+    );
   }
-);
+  return <input type="file" onChange={handleFileUpload} accept="audio/*" />;
+});
 
 export default DefaultPlayer;

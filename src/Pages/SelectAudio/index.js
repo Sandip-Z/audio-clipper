@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const SelectAudio = () => {
     return <div>
-        <p>This is select audio page</p>
+        <Link to="/clip">This is select audio page</Link>
     </div>
 }
 

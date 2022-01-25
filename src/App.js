@@ -1,36 +1,17 @@
+import { useContext } from "react";
 import DefaultPlayer from "Components/Molecules/Player";
 import TimeSlot from "Components/Organism/Timeslot";
-import { useTimeslot } from "hook/useTimeslot";
+import { Context } from "./Context/TimeSlotContext";
+
 import "./App.css";
 
 function App() {
-  const {
-    audioRef,
-    timeSlots,
-    audioSource,
-    selectedTimeSlot,
-    handleAddTimeSlot,
-    handleSelectedTimeSlotChanged,
-    handleFileUpload,
-    handlePlaySelectedTimeSlot,
-    handleSelectedTimeSlotTimeChanged,
-    deleteTimeSlot,
-    removeSource,
-    sourceDuration,
-  } = useTimeslot();
+  const audioContext = useContext(Context);
+
+  const { timeSlots, handleAddTimeSlot } = audioContext;
 
   const renderTimeSlots = (timeSlots || []).map((each) => (
-    <TimeSlot
-      timeslot={each}
-      handlePlaySelectedTimeSlot={handlePlaySelectedTimeSlot}
-      handleSelectedTimeSlotChanged={handleSelectedTimeSlotChanged}
-      handleSelectedTimeSlotTimeChanged={handleSelectedTimeSlotTimeChanged}
-      deleteTimeSlot={deleteTimeSlot}
-      key={each.id}
-      selectedTimeSlot={selectedTimeSlot}
-      audioRef={audioRef}
-      duration={sourceDuration}
-    />
+    <TimeSlot timeslot={each} key={each.id} />
   ));
 
   return (
@@ -48,14 +29,7 @@ function App() {
         <div>{renderTimeSlots}</div>
       </section>
       <aside>
-        <DefaultPlayer
-          src={audioSource}
-          handleFileUpload={handleFileUpload}
-          className="audioInput"
-          removeSource={removeSource}
-          selectedTimeSlot={selectedTimeSlot}
-          audioRef={audioRef}
-        />
+        <DefaultPlayer className="audioInput" />
       </aside>
     </main>
   );
